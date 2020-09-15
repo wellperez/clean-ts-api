@@ -112,22 +112,37 @@ describe('SignUp Controller', () => {
     sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
   })
-})
 
-test('Should return 500 if EmailValidator throws', () => {
-  const { sut, emailValidatorStub } = makeSut()
-  jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
-    throw new Error()
-  })
-  const httpRequest = {
-    body: {
-      name: 'any name',
-      email: 'any_email@email.com',
-      password: 'any_password',
-      passwordConfirmation: 'any_password'
+  test('Should return 500 if EmailValidator throws', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
     }
-  }
-  const httpResponse = sut.handle(httpRequest)
-  expect(httpResponse.statusCode).toBe(500)
-  expect(httpResponse.body).toEqual(new ServerError())
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('Should return 400 if password is different password confirmation', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        passwordConfirmation: 'invalid_passwordd'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
+  })
 })
