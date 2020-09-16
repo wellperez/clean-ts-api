@@ -31,13 +31,15 @@ export class SignUpController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('email'))
       }
+
       const account = await this.addAccount.add({
         name,
         email,
         password
       })
       return ok(account)
-    } catch {
+    } catch (err) {
+      console.error(err)
       return serverError()
     }
   }
