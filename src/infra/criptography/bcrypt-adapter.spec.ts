@@ -44,11 +44,11 @@ describe('Bcrypt Adapter', () => {
     expect(compareSpy).toHaveBeenCalledWith('any_value', 'any_hash')
   })
 
-  // test('should return a valid hash on hash success', async () => {
-  //   const sut = makeSut()
-  //   const hash = await sut.hash('any_value')
-  //   expect(hash).toBe('hash')
-  // })
+  test('should return true when compare success', async () => {
+    const sut = makeSut()
+    const isValid = await sut.compare('any_value', 'any_hash')
+    expect(isValid).toBe(true)
+  })
 
   // test('should throw if bcrypt throws', async () => {
   //   const sut = makeSut()
