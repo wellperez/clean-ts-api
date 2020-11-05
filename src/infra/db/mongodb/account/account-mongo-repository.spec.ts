@@ -19,7 +19,8 @@ describe('Accout Mongo Repository', () => {
   const makeSut = (): AccountMongoRepository => {
     return new AccountMongoRepository()
   }
-  describe('add', () => {
+
+  describe('add()', () => {
     test('should return an account on add success', async () => {
       const sut = makeSut()
       const account = await sut.add({
@@ -35,7 +36,7 @@ describe('Accout Mongo Repository', () => {
     })
   })
 
-  describe('load', () => {
+  describe('loadByEmail()', () => {
     test('should return an account on loadByEmail success', async () => {
       const sut = makeSut()
       await accountCollection.insertOne({
@@ -58,7 +59,7 @@ describe('Accout Mongo Repository', () => {
     })
   })
 
-  describe('update', () => {
+  describe('updateAccessToken()', () => {
     test('should update the account accessToken on updateAccessToken success', async () => {
       const sut = makeSut()
       const res = await accountCollection.insertOne({
@@ -72,6 +73,24 @@ describe('Accout Mongo Repository', () => {
       const account = await accountCollection.findOne({ _id: fakeAccount._id })
       expect(account).toBeTruthy()
       expect(account.accessToken).toBe('any_token')
+    })
+  })
+
+  describe('loadByToken', () => {
+    test('should return an account on loadByToken success without role', async () => {
+      const sut = makeSut()
+      await accountCollection.insertOne({
+        name: 'any_name',
+        email: 'any@email.com',
+        password: 'any_password',
+        accessToken: 'any_token'
+      })
+      const account = await sut.loadByToken('any_token')
+      expect(account).toBeTruthy()
+      expect(account.id).toBeTruthy()
+      expect(account.name).toBe('any_name')
+      expect(account.email).toBe('any@email.com')
+      expect(account.password).toBe('any_password')
     })
   })
 })
