@@ -1,9 +1,9 @@
 import { ok, serverError } from '../../../helpers/http/http-helper'
-import { Controller, HttpRequest, HttpResponse, LoadSurveys } from './load-surveys-controller-protocols'
+import { Controller, HttpResponse, LoadSurveys } from './load-surveys-controller-protocols'
 
 export class LoadSurveysController implements Controller {
   constructor (private readonly loadSurveys: LoadSurveys) {}
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (): Promise<HttpResponse> {
     try {
       const surveys = await this.loadSurveys.load()
       return ok(surveys)
