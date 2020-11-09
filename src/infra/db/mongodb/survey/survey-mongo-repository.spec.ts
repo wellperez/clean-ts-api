@@ -1,14 +1,19 @@
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
+import MockDate from 'mockdate'
 
 let surveyCollection: Collection
 
 describe('Survey Mongo Repository', () => {
-  beforeAll(async () => await MongoHelper.connect(process.env.MONGO_URL))
+  beforeAll(async () => {
+    await MongoHelper.connect(process.env.MONGO_URL)
+    MockDate.set(new Date())
+  })
 
   afterAll(async () => {
     await MongoHelper.disconnect()
+    MockDate.reset()
   })
 
   beforeEach(async () => {
@@ -21,7 +26,7 @@ describe('Survey Mongo Repository', () => {
   }
 
   describe('add()', () => {
-    test('should add a survey on success', async () => {
+    test('should load all surveys on success', async () => {
       const sut = makeSut()
       await sut.add({
         question: 'any_question',
@@ -35,6 +40,38 @@ describe('Survey Mongo Repository', () => {
       })
       const survey = await surveyCollection.findOne({ question: 'any_question' })
       expect(survey).toBeTruthy()
+    })
+  })
+
+  describe('loadAll()', () => {
+    test('should add a survey on success', async () => {
+      const sut = makeSut()
+      await surveyCollection.insertMany([
+        {
+          question: 'any_question',
+          answers: [{
+            image: 'any_image',
+            answer: 'any_answer'
+          }, {
+            answer: 'other_answer'
+          }],
+          date: new Date()
+        },
+        {
+          question: 'another_question',
+          answers: [{
+            image: 'another_image',
+            answer: 'another_answer'
+          }, {
+            answer: 'another_answer'
+          }],
+          date: new Date()
+        }
+      ])
+      const survey = await sut.loadAll()
+      // expect(survey.length).toBe(2)
+      expect(survey[0].question).toBe('any_question')
+      expect(survey[1].question).toBe('another_question')
     })
   })
 })
