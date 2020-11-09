@@ -44,7 +44,7 @@ describe('Survey Mongo Repository', () => {
   })
 
   describe('loadAll()', () => {
-    test('should add a survey on success', async () => {
+    test('should load surveys on success', async () => {
       const sut = makeSut()
       await surveyCollection.insertMany([
         {
@@ -69,9 +69,14 @@ describe('Survey Mongo Repository', () => {
         }
       ])
       const survey = await sut.loadAll()
-      // expect(survey.length).toBe(2)
+      expect(survey.length).toBe(2)
       expect(survey[0].question).toBe('any_question')
       expect(survey[1].question).toBe('another_question')
     })
+  })
+  test('should load surveys on success', async () => {
+    const sut = makeSut()
+    const survey = await sut.loadAll()
+    expect(survey.length).toBe(0)
   })
 })
