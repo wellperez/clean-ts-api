@@ -91,5 +91,25 @@ describe('Survey Routes', () => {
         .set('x-access-token', accessToken)
         .expect(204)
     })
+
+    test('Should return 200 on load surveys with valid accessToken and valid content in surveys collection', async () => {
+      const accessToken = await mockAccessToken()
+      await request(app)
+        .post('/api/surveys')
+        .set('x-access-token', accessToken)
+        .send({
+          question: 'Question',
+          answers: [{
+            answer: 'Answer 1',
+            image: 'http://image-name.com'
+          }, {
+            answer: 'Answer 2'
+          }]
+        })
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(200)
+    })
   })
 })
