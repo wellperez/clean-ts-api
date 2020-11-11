@@ -1,6 +1,6 @@
 import { AddAccountModel, AddAccountRepository, Hasher, LoadAccountByEmailRepository } from './db-add-account-protocols'
 import { DbAddAccount } from './db-add-account'
-import { AccountModel } from '../../../domain/models/account'
+import { AccountModel } from '@/domain/models/account'
 
 const makeEncrypter = (): Hasher => {
   class HasherStub implements Hasher {

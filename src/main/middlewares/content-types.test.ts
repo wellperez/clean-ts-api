@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../config/app'
+import app from '@/main/config/app'
 
 describe('Content Type Middleware', () => {
   const uri = '/test_content_type'
