@@ -94,18 +94,28 @@ describe('Survey Routes', () => {
 
     test('Should return 200 on load surveys with valid accessToken and valid content in surveys collection', async () => {
       const accessToken = await mockAccessToken()
-      await request(app)
-        .post('/api/surveys')
-        .set('x-access-token', accessToken)
-        .send({
-          question: 'Question',
+      await surveyCollection.insertMany([
+        {
+          question: 'any_question',
           answers: [{
-            answer: 'Answer 1',
-            image: 'http://image-name.com'
+            image: 'any_image',
+            answer: 'any_answer'
           }, {
-            answer: 'Answer 2'
-          }]
-        })
+            answer: 'other_answer'
+          }],
+          date: new Date()
+        },
+        {
+          question: 'another_question',
+          answers: [{
+            image: 'another_image',
+            answer: 'another_answer'
+          }, {
+            answer: 'another_answer'
+          }],
+          date: new Date()
+        }
+      ])
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
