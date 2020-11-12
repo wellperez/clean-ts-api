@@ -38,7 +38,7 @@ const makeSut = (role?: string): SutTypes => {
   }
 }
 
-interface SutTypes {
+type SutTypes = {
   sut: AuthMiddleware
   loadAccountByTokenStub: LoadAccountByToken
 }
