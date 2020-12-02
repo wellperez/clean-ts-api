@@ -11,6 +11,7 @@
     "down": "docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unitverbose": "jest --passWithNoTests --runInBand --watch -c jest-unit-config.js",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
