@@ -26,7 +26,7 @@ describe('Survey Mongo Repository', () => {
   }
 
   describe('add()', () => {
-    test('should load all surveys on success', async () => {
+    test('should add a survey on success', async () => {
       const sut = makeSut()
       await sut.add({
         question: 'any_question',
