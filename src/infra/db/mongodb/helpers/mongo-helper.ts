@@ -1,8 +1,8 @@
 import { Collection, MongoClient } from 'mongodb'
 
 export const MongoHelper = {
-  client: null as unknown as MongoClient,
-  uri: null as unknown as string,
+  client: (null as unknown) as MongoClient,
+  uri: (null as unknown) as string,
   async connect (uri: string): Promise<void> {
     this.uri = uri
     this.client = await MongoClient.connect(uri, {
@@ -23,8 +23,12 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  map: (collection: any): any => {
-    const { _id, ...accountWithoutId } = collection
+  map: (data: any): any => {
+    const { _id, ...accountWithoutId } = data
     return Object.assign({}, accountWithoutId, { id: _id })
+  },
+
+  mapCollection: (collection: any[]): any[] => {
+    return collection.map((c) => MongoHelper.map(c))
   }
 }
