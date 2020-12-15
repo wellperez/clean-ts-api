@@ -3,11 +3,11 @@ import { AccountModel, AuthenticationParams, HashComparer, Encrypter, LoadAccoun
 import { throwError } from '@/domain/test'
 
 type SutTypes = {
-  sut: DbAuthentication
-  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
-  hashComparerStub: HashComparer
-  Encrypter: Encrypter
-  updateAccessTokenRepositoryStub: UpdateAccessTokenRepository
+  sut: DbAuthentication;
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository;
+  hashComparerStub: HashComparer;
+  Encrypter: Encrypter;
+  updateAccessTokenRepositoryStub: UpdateAccessTokenRepository;
 }
 
 const makeFakeAccount = (): AccountModel => {

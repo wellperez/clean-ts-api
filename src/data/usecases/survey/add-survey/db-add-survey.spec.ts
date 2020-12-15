@@ -32,8 +32,8 @@ const makeSut = (): SutTypes => {
 }
 
 type SutTypes = {
-  sut: DbAddSurvey
-  addSurveyRepositoryStub: AddSurveyRepository
+  sut: DbAddSurvey;
+  addSurveyRepositoryStub: AddSurveyRepository;
 }
 
 describe('DbAddAccount Usecase', () => {

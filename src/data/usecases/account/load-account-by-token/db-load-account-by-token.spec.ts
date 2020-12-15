@@ -3,9 +3,9 @@ import { AccountModel, Decrypter, LoadAccountByTokenRepository } from './db-load
 import { throwError } from '@/domain/test'
 
 type SutTypes = {
-  sut: DbLoadAccountByToken
-  decrypterStub: Decrypter
-  loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository
+  sut: DbLoadAccountByToken;
+  decrypterStub: Decrypter;
+  loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
 }
 
 const makeFakeAccount = (): AccountModel => ({

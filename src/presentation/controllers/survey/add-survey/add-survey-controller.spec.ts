@@ -56,9 +56,9 @@ const makeSut = (): SutTypes => {
 }
 
 type SutTypes = {
-  sut: AddSurveyController
-  validationStub: Validation
-  addSurveyStub: AddSurvey
+  sut: AddSurveyController;
+  validationStub: Validation;
+  addSurveyStub: AddSurvey;
 }
 
 describe('AddSurvey Controller', () => {

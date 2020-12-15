@@ -65,10 +65,10 @@ const makeFakeRequest = (): HttpRequest => ({
 })
 
 type SutTypes = {
-  sut: SignUpController
-  addAccountStub: AddAccount
-  validationStub: Validation
-  authenticationStub: Authentication
+  sut: SignUpController;
+  addAccountStub: AddAccount;
+  validationStub: Validation;
+  authenticationStub: Authentication;
 }
 
 const makeSut = (): SutTypes => {

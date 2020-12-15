@@ -46,8 +46,8 @@ const makeSut = (role?: string): SutTypes => {
 }
 
 type SutTypes = {
-  sut: AuthMiddleware
-  loadAccountByTokenStub: LoadAccountByToken
+  sut: AuthMiddleware;
+  loadAccountByTokenStub: LoadAccountByToken;
 }
 
 describe('Auth Middleware', () => {

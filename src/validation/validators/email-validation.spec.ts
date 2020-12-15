@@ -13,8 +13,8 @@ const makeEmailValidator = (): EmailValidator => {
 }
 
 type SutTypes = {
-  sut: EmailValidation
-  emailValidatorStub: EmailValidator
+  sut: EmailValidation;
+  emailValidatorStub: EmailValidator;
 }
 
 const makeSut = (): SutTypes => {

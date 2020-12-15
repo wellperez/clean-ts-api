@@ -9,8 +9,8 @@ import { throwError } from '@/domain/test'
 import MockDate from 'mockdate'
 
 type SutTypes = {
-  sut: LoadSurveysController
-  loadSurveysStub: LoadSurveys
+  sut: LoadSurveysController;
+  loadSurveysStub: LoadSurveys;
 }
 
 const makeLoadSurveys = (): LoadSurveys => {

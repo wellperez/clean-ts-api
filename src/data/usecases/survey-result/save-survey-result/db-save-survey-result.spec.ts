@@ -42,8 +42,8 @@ const makeSut = (): SutTypes => {
 }
 
 type SutTypes = {
-  sut: DbSaveSurveyResult
-  saveSurveyResultRepositoryStub: SaveSurveyResultRepository
+  sut: DbSaveSurveyResult;
+  saveSurveyResultRepositoryStub: SaveSurveyResultRepository;
 }
 
 describe('DbSaveSurveyResult Usecase', () => {

@@ -45,9 +45,9 @@ const makeFakeRequest = (): HttpRequest => ({
 })
 
 type SutTypes = {
-  sut: LogControllerDecorator
-  controllerStub: Controller
-  logErrorRepositoryStub: LogErrorRepository
+  sut: LogControllerDecorator;
+  controllerStub: Controller;
+  logErrorRepositoryStub: LogErrorRepository;
 }
 
 const makeSut = (): SutTypes => {

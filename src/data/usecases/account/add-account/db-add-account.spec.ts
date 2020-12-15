@@ -31,10 +31,10 @@ const makeAddAccountRepository = (): AddAccountRepository => {
 }
 
 type SutTypes = {
-  sut: DbAddAccount
-  hasherStub: Hasher
-  addAccountRepositoryStub: AddAccountRepository
-  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
+  sut: DbAddAccount;
+  hasherStub: Hasher;
+  addAccountRepositoryStub: AddAccountRepository;
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository;
 }
 
 const makeSut = (): SutTypes => {

@@ -36,8 +36,8 @@ const makeSut = (): SutTypes => {
 }
 
 type SutTypes = {
-  sut: DbLoadSurveyById
-  loadSurveyByIdRepository: LoadSurveyByIdRepository
+  sut: DbLoadSurveyById;
+  loadSurveyByIdRepository: LoadSurveyByIdRepository;
 }
 
 describe('DbLoadSurveyById', () => {

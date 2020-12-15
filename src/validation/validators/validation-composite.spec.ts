@@ -12,8 +12,8 @@ const makeValidation = (): Validation => {
 }
 
 type SutTypes = {
-  sut: ValidationComposite
-  validationStubs: Validation[]
+  sut: ValidationComposite;
+  validationStubs: Validation[];
 }
 
 const makeSut = (): SutTypes => {

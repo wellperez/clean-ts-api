@@ -63,9 +63,9 @@ const makeSaveSurveyResult = (): SaveSurveyResult => {
 }
 
 type SutTypes = {
-  sut: SaveSurveyResultController
-  loadSurveyByIdStub: LoadSurveyById
-  saveSurveyResultStub: SaveSurveyResult
+  sut: SaveSurveyResultController;
+  loadSurveyByIdStub: LoadSurveyById;
+  saveSurveyResultStub: SaveSurveyResult;
 }
 
 const makeSut = (): SutTypes => {
