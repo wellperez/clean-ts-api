@@ -11,6 +11,7 @@ import {
   SurveyModel,
   SurveyResultModel
 } from './save-survey-result-controller-protocols'
+import { throwError } from '@/domain/test'
 import MockDate from 'mockdate'
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -53,7 +54,9 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return await new Promise((resolve, reject) => resolve(makeFakeSurveyResult()))
+      return await new Promise((resolve, reject) =>
+        resolve(makeFakeSurveyResult())
+      )
     }
   }
   return new SaveSurveyResultStub()
@@ -68,7 +71,10 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const loadSurveyByIdStub = makeLoadSurveyById()
   const saveSurveyResultStub = makeSaveSurveyResult()
-  const sut = new SaveSurveyResultController(loadSurveyByIdStub, saveSurveyResultStub)
+  const sut = new SaveSurveyResultController(
+    loadSurveyByIdStub,
+    saveSurveyResultStub
+  )
   return {
     sut,
     loadSurveyByIdStub,
@@ -102,7 +108,9 @@ describe('SaveSurveyResult Controller', () => {
 
   test('should return 500 if LoadSurveyById throws', async () => {
     const { loadSurveyByIdStub, sut } = makeSut()
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest
+      .spyOn(loadSurveyByIdStub, 'loadById')
+      .mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
@@ -132,7 +140,7 @@ describe('SaveSurveyResult Controller', () => {
 
   test('should return 500 if SaveSurveyResult throws', async () => {
     const { saveSurveyResultStub, sut } = makeSut()
-    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(saveSurveyResultStub, 'save').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })

@@ -1,8 +1,18 @@
 import { LoginController } from './login-controller'
-import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
+import {
+  badRequest,
+  ok,
+  serverError,
+  unauthorized
+} from '@/presentation/helpers/http/http-helper'
 import { MissingParamError } from '@/presentation/errors'
-import { HttpRequest, Authentication, Validation } from './login-controller-protocols'
+import {
+  HttpRequest,
+  Authentication,
+  Validation
+} from './login-controller-protocols'
 import { AuthenticationParams } from '@/domain/usecases/account/authentication'
+import { throwError } from '@/domain/test'
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
@@ -27,8 +37,7 @@ const makeFakeRequest = (): HttpRequest => ({
     email: 'any_email@email.com',
     password: 'any_password'
   }
-}
-)
+})
 
 type SutTypes = {
   sut: LoginController
@@ -67,7 +76,7 @@ describe('Login Controller', () => {
 
   test('should return 500 if Authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
@@ -88,8 +97,12 @@ describe('Login Controller', () => {
 
   test('Should return 400 if Validation returns an error', async () => {
     const { sut, validationStub } = makeSut()
-    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
+    jest
+      .spyOn(validationStub, 'validate')
+      .mockReturnValueOnce(new MissingParamError('any_field'))
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
+    expect(httpResponse).toEqual(
+      badRequest(new MissingParamError('any_field'))
+    )
   })
 })

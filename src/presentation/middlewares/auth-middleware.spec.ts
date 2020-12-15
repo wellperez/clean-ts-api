@@ -1,7 +1,16 @@
-import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import {
+  forbidden,
+  ok,
+  serverError
+} from '@/presentation/helpers/http/http-helper'
 import { AccessDeniedError } from '@/presentation/errors/access-denied-error'
 import { AuthMiddleware } from './auth-middleware'
-import { LoadAccountByToken, HttpRequest, AccountModel } from './auth-middleware-protocols'
+import {
+  LoadAccountByToken,
+  HttpRequest,
+  AccountModel
+} from './auth-middleware-protocols'
+import { throwError } from '@/domain/test'
 
 const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
@@ -10,13 +19,11 @@ const makeFakeAccount = (): AccountModel => ({
   password: 'hashed_password'
 })
 
-const makeFakeRequest = (): HttpRequest => (
-  {
-    headers: {
-      'x-access-token': 'any_token'
-    }
+const makeFakeRequest = (): HttpRequest => ({
+  headers: {
+    'x-access-token': 'any_token'
   }
-)
+})
 
 const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
@@ -60,7 +67,9 @@ describe('Auth Middleware', () => {
 
   test('should return 403 if LoadAccountByToken returns null', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
-    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => resolve(null)))
+    jest
+      .spyOn(loadAccountByTokenStub, 'load')
+      .mockReturnValueOnce(new Promise((resolve, reject) => resolve(null)))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
@@ -73,7 +82,9 @@ describe('Auth Middleware', () => {
 
   test('should return 500 if LoadAccountByToken throws', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
-    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest
+      .spyOn(loadAccountByTokenStub, 'load')
+      .mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
