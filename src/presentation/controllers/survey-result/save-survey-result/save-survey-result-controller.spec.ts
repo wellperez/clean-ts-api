@@ -6,7 +6,7 @@ import {
   LoadSurveyById,
   ok,
   SaveSurveyResult,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   serverError,
   SurveyModel,
   SurveyResultModel
@@ -52,7 +52,7 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return await new Promise((resolve, reject) => resolve(makeFakeSurveyResult()))
     }
   }
