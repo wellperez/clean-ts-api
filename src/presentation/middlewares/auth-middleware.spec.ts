@@ -10,7 +10,7 @@ import {
   HttpRequest,
   AccountModel
 } from './auth-middleware-protocols'
-import { mockAccount, throwError } from '@/domain/test'
+import { mockAccountModel, throwError } from '@/domain/test'
 
 const makeFakeRequest = (): HttpRequest => ({
   headers: {
@@ -21,7 +21,7 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (accessToken: string, role?: string): Promise<AccountModel> {
-      return await new Promise((resolve) => resolve(mockAccount()))
+      return await new Promise((resolve) => resolve(mockAccountModel()))
     }
   }
 

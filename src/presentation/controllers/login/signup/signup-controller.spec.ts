@@ -19,12 +19,12 @@ import {
   ok,
   serverError
 } from '@/presentation/helpers/http/http-helper'
-import { mockAccount, throwError } from '@/domain/test'
+import { mockAccountModel, throwError } from '@/domain/test'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountParams): Promise<AccountModel> {
-      return await new Promise((resolve) => resolve(mockAccount()))
+      return await new Promise((resolve) => resolve(mockAccountModel()))
     }
   }
   return new AddAccountStub()
