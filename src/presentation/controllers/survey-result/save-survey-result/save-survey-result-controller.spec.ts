@@ -42,7 +42,7 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return await new Promise((resolve, reject) =>
+      return await new Promise((resolve) =>
         resolve(makeFakeSurveyResult())
       )
     }
