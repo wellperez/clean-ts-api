@@ -19,12 +19,12 @@ import {
   ok,
   serverError
 } from '@/presentation/helpers/http/http-helper'
-import { throwError } from '@/domain/test'
+import { mockAccount, throwError } from '@/domain/test'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountParams): Promise<AccountModel> {
-      return await new Promise((resolve) => resolve(makeFakeAccount()))
+      return await new Promise((resolve) => resolve(mockAccount()))
     }
   }
   return new AddAccountStub()
@@ -47,13 +47,6 @@ const makeValidation = (): Validation => {
   }
   return new ValidationStub()
 }
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@email.com',
-  password: 'valid_password'
-})
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {

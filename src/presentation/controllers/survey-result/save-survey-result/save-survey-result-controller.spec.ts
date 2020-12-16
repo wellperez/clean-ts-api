@@ -45,7 +45,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 const makeLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string): Promise<SurveyModel> {
-      return await new Promise((resolve, reject) => resolve(makeFakeSurvey()))
+      return await new Promise((resolve) => resolve(makeFakeSurvey()))
     }
   }
   return new LoadSurveyByIdStub()

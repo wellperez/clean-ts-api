@@ -1,6 +1,7 @@
 import { DbLoadAccountByToken } from './db-load-account-by-token'
 import { AccountModel, Decrypter, LoadAccountByTokenRepository } from './db-load-account-by-token-protocols'
-import { throwError } from '@/domain/test'
+import { mockAccount, throwError } from '@/domain/test'
+import { mockDecrypter } from '@/data/test'
 
 type SutTypes = {
   sut: DbLoadAccountByToken;
@@ -8,33 +9,17 @@ type SutTypes = {
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
 }
 
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@email.com',
-  password: 'hashed_password'
-})
-
 const makeLoadAccountByToken = (): LoadAccountByTokenRepository => {
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
     async loadByToken (token: string, role?: string): Promise<AccountModel> {
-      return await new Promise(resolve => resolve(makeFakeAccount()))
+      return await new Promise(resolve => resolve(mockAccount()))
     }
   }
   return new LoadAccountByTokenRepositoryStub()
 }
 
-const makeDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt (value: string, role?: string): Promise<string> {
-      return await new Promise(resolve => resolve('any_value'))
-    }
-  }
-  return new DecrypterStub()
-}
-
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypter()
+  const decrypterStub = mockDecrypter()
   const loadAccountByTokenRepositoryStub = makeLoadAccountByToken()
   const sut = new DbLoadAccountByToken(decrypterStub, loadAccountByTokenRepositoryStub)
   return {
@@ -76,7 +61,7 @@ describe('DbLoadAccountByToken Usecase', () => {
   test('should return an account on success', async () => {
     const { sut } = makeSut()
     const account = await sut.load('any_token', 'any_role')
-    expect(account).toEqual(makeFakeAccount())
+    expect(account).toEqual(mockAccount())
   })
 
   test('Should throw if LoadAccountByTokenRepository throws', async () => {
